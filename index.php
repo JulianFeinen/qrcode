@@ -1,4 +1,16 @@
-<center><img src="data:image/png;base64,<?php echo logoqrcode(); ?>" alt="img"/></center>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<center>
+    <img src="data:image/png;base64,<?php echo logoqrcode(); ?>" alt="img"/>
+</center>
+</body>
+</html>
 <?php
 function logoqrcode()
 {
@@ -7,9 +19,8 @@ $qrcodecontent = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 $pfad = "QRcodes/";
 $dateiname = "testqrcode";
 $dateityp = ".png";
-$datei = $pfad.$dateiname.uniqid().$dateityp;
-QRcode::png($qrcodecontent,$datei,"H",10,0);
-
+$datei = $dateiname.$dateityp;
+QRcode::png($qrcodecontent,$datei,"H",10,1);
 $logo = "logo/logokiz_start.png";
 $QR = imagecreatefrompng($datei);
 
@@ -19,11 +30,11 @@ $QR_height = imagesy($QR);
 
 $logo_width  = imagesx($logo);
 $logo_height = imagesy($logo);
-$logo_qr_width = $QR_width/4;
+$logo_qr_width = $QR_width/3;
 $scale = $logo_width/$logo_qr_width;
 $logo_qr_height = $logo_height/$scale;
 
-imagecopyresampled($QR,$logo, $QR_width/2.5, $QR_height/2.5,0,0,$logo_qr_width,$logo_qr_height,$logo_width,$logo_height);
+imagecopyresampled($QR,$logo, $QR_width/3, $QR_height/2.5,0,0,$logo_qr_width,$logo_qr_height,$logo_width,$logo_height);
 ob_start();
 imagepng($QR);
 imagedestroy($QR);
