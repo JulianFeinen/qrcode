@@ -1,6 +1,6 @@
 <?PHP
 $qr_img="";
-if(isset($_POST))
+if(isset($_POST["logo"]))
 {
     switch($_POST["logo"])
     {
@@ -10,8 +10,6 @@ if(isset($_POST))
         break;
     }
 }
-print_r($_POST);
-
 $str_html = '<html>
 <head>
     <meta charset="UTF-8">
@@ -35,7 +33,7 @@ echo $str_html;
 
 function getqrcode($qr_img, $withlogo)
 {   
-    require 'phpqrcode/qrlib.php';
+    require 'phpqrcode/qrlib.php';//QR code library
     $qrcodecontent = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
     $pfad = "QRcodes/";
     $pfadmitlogo = "QRcodes_logo/";
@@ -59,7 +57,7 @@ function getqrcode($qr_img, $withlogo)
         $logo_qr_width = $QR_width/3;
         $scale = $logo_width/$logo_qr_width;
         $logo_qr_height = $logo_height/$scale;
-        imagecopyresampled($QR,$logo, $QR_width/3, $QR_height/2.5,0,0,round($logo_qr_width),round($logo_qr_height),$logo_width,$logo_height);
+        imagecopyresampled($QR,$logo, $QR_width/3, $QR_height/2.5,0,0,round($logo_qr_width),round($logo_qr_height),$logo_width,$logo_height);//der bereits erstellte QR code wird mit dem logo kombiniert
 
         ob_start();
         imagepng($QR);
@@ -69,7 +67,7 @@ function getqrcode($qr_img, $withlogo)
 
         $filecount_mitlogo = count(glob("$pfadmitlogo"."*$dateityp"));
         $filewithlogo = $pfadmitlogo.$dateiname_mitlogo.$filecount_mitlogo.$dateityp;
-        file_put_contents($filewithlogo, $image_data);
+        file_put_contents($filewithlogo, $image_data);//erstellt .png von dem QR code mit logo
 
         $qr_img = $filewithlogo;
     }
@@ -78,5 +76,4 @@ function getqrcode($qr_img, $withlogo)
     } 
     return $qr_img;
 }
-$_POST = array();
 ?>
